@@ -2,9 +2,23 @@ import Slider from 'react-slick';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
 import '../../styles/BookCards.css'
-
+import { useEffect, useState } from "react";
+import axios from 'axios';
+import { Link } from 'react-router-dom';
 
 export const BookCards = () => {
+
+    const [books, setBooks] = useState([]);
+
+    useEffect(() => {
+        axios.get('http://127.0.0.1:8000/api/product/-sold')
+            .then(response => {
+                setBooks(response.data.products); // Update here to access the 'products' key
+            })
+            .catch(error => {
+                console.error('Error fetching books:', error);
+            });
+    }, []);
 
     const NextArrow = (props: any) => {
         const { className, onClick } = props;
@@ -68,197 +82,26 @@ export const BookCards = () => {
                 <h2 className='font-bold'>Giới thiệu</h2>
             </div>
             <Slider {...settings}>
-                <div className='p-3'>
-                    <div className='mb-2'>
-                        <div className='max-w-[170px]'>
-                            <img className='w-full' src='https://cdn0.fahasa.com/media/catalog/product/d/9/d90063dfb62ac7f103cd1f0de62c04c2_1.jpg' alt='' />
-                        </div>
-                    </div>
-                    <div>
-                        <h2 className='mt-2 line-clamp-1'>English Grammar English Grammar English Grammar</h2>
-                        <div>
-                            <p>
-                                <span className='text-[#C92127] font-semibold'>599.000 đ</span>
-                            </p>
+                {books.map(book => (
+                    <div className='p-3'>
+                        <div className='mb-2'>
+                            <Link to={`/shop/details/${book.id}`} className='max-w-[170px]'>
+                                <img className='w-full h-[200px]' src={book.thumbnail_image} alt='' />
+                            </Link>
                         </div>
                         <div>
-                            <p className='text-[10px]'><span className='text-[#7A7E7F] mt-[1px]'>Đã bán </span>60</p>
+                            <Link to={`/shop/details/${book.id}`}><h2 className='mt-2 line-clamp-1'>{book.name}</h2></Link>
+                            <div>
+                                <p>
+                                    <span className='text-[#C92127] font-semibold'>{(book.price).toLocaleString().replace(/\B(?=(\d{3})+(?!\d))/g, '.')} đ</span>
+                                </p>
+                            </div>
+                            <div>
+                                <p className='text-[10px]'><span className='text-[#7A7E7F] mt-[1px]'>Đã bán </span>{book.sold}</p>
+                            </div>
                         </div>
                     </div>
-                </div> 
-                <div className='p-3'>
-                    <div className='mb-2'>
-                        <div className='max-w-[170px]'>
-                            <img className='w-full' src='https://cdn0.fahasa.com/media/catalog/product/d/9/d90063dfb62ac7f103cd1f0de62c04c2_1.jpg' alt='' />
-                        </div>
-                    </div>
-                    <div>
-                        <h2 className='mt-2'>English Grammar</h2>
-                        <div>
-                            <p>
-                                <span className='text-[#C92127] font-semibold'>599.000 đ</span>
-                            </p>
-                        </div>
-                        <div>
-                            <p className='text-[10px]'><span className='text-[#7A7E7F] mt-[1px]'>Đã bán </span>60</p>
-                        </div>
-                    </div>
-                </div> 
-                <div className='p-3'>
-                    <div className='mb-2'>
-                        <div className='max-w-[170px]'>
-                            <img className='w-full' src='https://cdn0.fahasa.com/media/catalog/product/d/9/d90063dfb62ac7f103cd1f0de62c04c2_1.jpg' alt='' />
-                        </div>
-                    </div>
-                    <div>
-                        <h2 className='mt-2'>English Grammar</h2>
-                        <div>
-                            <p>
-                                <span className='text-[#C92127] font-semibold'>599.000 đ</span>
-                            </p>
-                        </div>
-                        <div>
-                            <p className='text-[10px]'><span className='text-[#7A7E7F] mt-[1px]'>Đã bán </span>60</p>
-                        </div>
-                    </div>
-                </div> 
-                <div className='p-3'>
-                    <div className='mb-2'>
-                        <div className='max-w-[170px]'>
-                            <img className='w-full' src='https://cdn0.fahasa.com/media/catalog/product/d/9/d90063dfb62ac7f103cd1f0de62c04c2_1.jpg' alt='' />
-                        </div>
-                    </div>
-                    <div>
-                        <h2 className='mt-2'>English Grammar</h2>
-                        <div>
-                            <p>
-                                <span className='text-[#C92127] font-semibold'>599.000 đ</span>
-                            </p>
-                        </div>
-                        <div>
-                            <p className='text-[10px]'><span className='text-[#7A7E7F] mt-[1px]'>Đã bán </span>60</p>
-                        </div>
-                    </div>
-                </div> <div className='p-3'>
-                    <div className='mb-2'>
-                        <div className='max-w-[170px]'>
-                            <img className='w-full' src='https://cdn0.fahasa.com/media/catalog/product/d/9/d90063dfb62ac7f103cd1f0de62c04c2_1.jpg' alt='' />
-                        </div>
-                    </div>
-                    <div>
-                        <h2 className='mt-2'>English Grammar</h2>
-                        <div>
-                            <p>
-                                <span className='text-[#C92127] font-semibold'>599.000 đ</span>
-                            </p>
-                        </div>
-                        <div>
-                            <p className='text-[10px]'><span className='text-[#7A7E7F] mt-[1px]'>Đã bán </span>60</p>
-                        </div>
-                    </div>
-                </div> <div className='p-3'>
-                    <div className='mb-2'>
-                        <div className='max-w-[170px]'>
-                            <img className='w-full' src='https://cdn0.fahasa.com/media/catalog/product/d/9/d90063dfb62ac7f103cd1f0de62c04c2_1.jpg' alt='' />
-                        </div>
-                    </div>
-                    <div>
-                        <h2 className='mt-2'>English Grammar</h2>
-                        <div>
-                            <p>
-                                <span className='text-[#C92127] font-semibold'>599.000 đ</span>
-                            </p>
-                        </div>
-                        <div>
-                            <p className='text-[10px]'><span className='text-[#7A7E7F] mt-[1px]'>Đã bán </span>60</p>
-                        </div>
-                    </div>
-                </div> <div className='p-3'>
-                    <div className='mb-2'>
-                        <div className='max-w-[170px]'>
-                            <img className='w-full' src='https://cdn0.fahasa.com/media/catalog/product/d/9/d90063dfb62ac7f103cd1f0de62c04c2_1.jpg' alt='' />
-                        </div>
-                    </div>
-                    <div>
-                        <h2 className='mt-2'>English Grammar</h2>
-                        <div>
-                            <p>
-                                <span className='text-[#C92127] font-semibold'>599.000 đ</span>
-                            </p>
-                        </div>
-                        <div>
-                            <p className='text-[10px]'><span className='text-[#7A7E7F] mt-[1px]'>Đã bán </span>60</p>
-                        </div>
-                    </div>
-                </div> <div className='p-3 border rounded-md'>
-                    <div className='mb-2'>
-                        <div className='max-w-[170px]'>
-                            <img className='w-full' src='https://cdn0.fahasa.com/media/catalog/product/d/9/d90063dfb62ac7f103cd1f0de62c04c2_1.jpg' alt='' />
-                        </div>
-                    </div>
-                    <div>
-                        <h2 className='mt-2'>English Grammar</h2>
-                        <div>
-                            <p>
-                                <span className='text-[#C92127] font-semibold'>599.000 đ</span>
-                            </p>
-                        </div>
-                        <div>
-                            <p className='text-[10px]'><span className='text-[#7A7E7F] mt-[1px]'>Đã bán </span>60</p>
-                        </div>
-                    </div>
-                </div> <div className='p-3 border rounded-md'>
-                    <div className='mb-2'>
-                        <div className='max-w-[170px]'>
-                            <img className='w-full' src='https://cdn0.fahasa.com/media/catalog/product/d/9/d90063dfb62ac7f103cd1f0de62c04c2_1.jpg' alt='' />
-                        </div>
-                    </div>
-                    <div>
-                        <h2 className='mt-2'>English Grammar</h2>
-                        <div>
-                            <p>
-                                <span className='text-[#C92127] font-semibold'>599.000 đ</span>
-                            </p>
-                        </div>
-                        <div>
-                            <p className='text-[10px]'><span className='text-[#7A7E7F] mt-[1px]'>Đã bán </span>60</p>
-                        </div>
-                    </div>
-                </div> <div className='p-3 border rounded-md'>
-                    <div className='mb-2'>
-                        <div className='max-w-[170px]'>
-                            <img className='w-full' src='https://cdn0.fahasa.com/media/catalog/product/d/9/d90063dfb62ac7f103cd1f0de62c04c2_1.jpg' alt='' />
-                        </div>
-                    </div>
-                    <div>
-                        <h2 className='mt-2'>English Grammar</h2>
-                        <div>
-                            <p>
-                                <span className='text-[#C92127] font-semibold'>599.000 đ</span>
-                            </p>
-                        </div>
-                        <div>
-                            <p className='text-[10px]'><span className='text-[#7A7E7F] mt-[1px]'>Đã bán </span>60</p>
-                        </div>
-                    </div>
-                </div> <div className='p-3 border rounded-md'>
-                    <div className='mb-2'>
-                        <div className='max-w-[170px]'>
-                            <img className='w-full' src='https://cdn0.fahasa.com/media/catalog/product/d/9/d90063dfb62ac7f103cd1f0de62c04c2_1.jpg' alt='' />
-                        </div>
-                    </div>
-                    <div>
-                        <h2 className='mt-2'>English Grammar</h2>
-                        <div>
-                            <p>
-                                <span className='text-[#C92127] font-semibold'>599.000 đ</span>
-                            </p>
-                        </div>
-                        <div>
-                            <p className='text-[10px]'><span className='text-[#7A7E7F] mt-[1px]'>Đã bán </span>60</p>
-                        </div>
-                    </div>
-                </div> 
+                ))}
             </Slider>
         </div>
     )

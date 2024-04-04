@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Order;
+use App\Models\Product;
 use App\Models\OrderItem;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
@@ -107,11 +108,13 @@ class PaymentController extends Controller
         // Tạo đơn hàng
         $order = Order::create([
             'user_id' => $data['user_id'],
+            'fullName' => $data['fullName'],
             'phone' => $data['phone'],
             'address' => $data['address'],
             'note' => $data['note'] ?? null,
             'total_price' => $data['totalPrice'],
         ]);
+
 
         // Thêm mỗi mục đơn hàng vào bảng order_items
         foreach ($data['items'] as $item) {
@@ -120,7 +123,15 @@ class PaymentController extends Controller
                 'product_id' => $item['product_id'],
                 'quantity' => $item['quantity'],
             ]);
+
+            $product = Product::find($item['product_id']);
+            if ($product) {
+                $product->sold += 1;
+                $product->quantity -= 1;
+                $product->save();
+            }
         }
+
         return Redirect::to('http://localhost:3006/pay-success');
     }
 

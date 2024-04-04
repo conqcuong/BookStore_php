@@ -125,6 +125,8 @@ export const Header = () => {
             </div>
         </div>
     );
+    const userRole = useSelector((state:any) => state?.auth.currentUser?.role);
+    const userCanAccess = userRole === 'admin';
 
     return (
         <div className="text-black duration-200 sticky z-40 right-0 top-0 border border-[#e8ebed]">
@@ -134,11 +136,11 @@ export const Header = () => {
                     <div>
                         <Link to='/' className='text-2xl font-bold text-blue-700 flex items-center gap-2'><FaBlog className=' inline-block'/>Books</Link>
                     </div>
-                    <div className="flex gap-7 font-semibold text-17px">
-                        <NavLink className="p-3" to='/'>Home</NavLink>
-                        <NavLink className="p-3" to='/shop'>Shop</NavLink>
-                        <Link className="p-3" to='/'>About</Link>
-                        <Link className="p-3" to='/'>Contact</Link>
+                    <div className="navbar flex gap-7 font-semibold text-17px">
+                        <NavLink className="p-3 nav-link" to='/'>Home</NavLink>
+                        <NavLink className="p-3 nav-link" to='/shop'>Shop</NavLink>
+                        <Link className="p-3 nav-link" to='/'>About</Link>
+                        <Link className="p-3 nav-link" to='/'>Contact</Link>
                     </div>
                     {/* sreach bar */}
                     <div className="flex justify-between items-center gap-4">
@@ -195,14 +197,16 @@ export const Header = () => {
                                                         <div className="text-text-color-light">{user.email}</div>
                                                     </div>
                                                 </div>
+                                                {userCanAccess && (
+                                                    <li className="block py-2">
+                                                        <Link to='/admin'>Trang quản trị</Link>
+                                                    </li>
+                                                )}
                                                 <li className="block py-2">
                                                     <button onClick={handleAccountInfoClick}>Thông tin tài khoản</button>
                                                 </li>
                                                 <li className="block py-2">
-                                                    <Link to='' className="text-gray-color hover:text-[#292929]">Quản lý đơn hàng</Link>
-                                                </li>
-                                                <li className="block py-2">
-                                                    <Link to='' className="text-gray-color hover:text-[#292929]">Lịch sử đơn hàng</Link>
+                                                    <Link to='/history-order' className="text-gray-color hover:text-[#292929]">Lịch sử đơn hàng</Link>
                                                 </li>
                                                 <li className="block py-2">
                                                     <button onClick={handleLogout} className="text-gray-color hover:text-[#292929]">Đăng xuất</button>

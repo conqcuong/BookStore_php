@@ -164,8 +164,7 @@ export const DetailPage = () => {
                     <div className="p-4 bg-white mt-8">
                         <h2 className="font-bold text-17px">Mô tả sản phẩm</h2>
                         <div>
-                            <p className="font-medium">Premium Boxset Haikyu!! 3 - Tập: 31 - 45 (Bộ 15 Cuốn)</p>
-                            <p>Bóng chuyền là môn thể thao vốn được mặc định dành cho những người “khổng lồ”. Ấy vậy mà Hinata Shoyo - một nam sinh nhỏ con, cao chưa tới 1m70 vẫn dõng dạc tuyên bố: “Tôi có thể nhảy cao!”, thách thức những tuyển thủ có ngoại hình vượt trội hơn hẳn m.ình. Hành trình vươn tới đỉnh cao bóng chuyền của Hinata không chỉ đơn thuần là của một m.ình cậu, mà đó còn là câu chuyện của những đồng đội ở trường Karasuno, những đối thủ tới từ những trường cấp ba khác trên khắp nước Nhật. “Đừng bao giờ từ bỏ trước khi nỗ lực hết m.ình”, “Hãy vượt qua giới hạn của bản thân để nắm lấy ước mơ”, “Chỉ có nhẫn nại rèn luyện mới tới được thành công”… là những thông điệp cực kì ý nghĩa mà tác giả Haruichi Furudate muốn nhắn nhủ tới độc giả. Nếu bạn muốn tìm một bộ truyện thể thao thực tế và truyền cảm hứng thì “Haikyu!!” chính là một tác phẩm như vậy. Nào, giờ thì mời các bạn cùng dõi theo cậu chàng Hinata trên con đường chinh phục môn bóng chuyền nhé!!</p>
+                            {book.description}
                         </div>
                     </div>
                     <div className="py-8">

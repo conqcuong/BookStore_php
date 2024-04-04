@@ -15,6 +15,7 @@ use App\Mail\SendMail;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Cookie;
+use Illuminate\Support\Facades\Redirect;
 
 class AuthController extends Controller
 {
@@ -79,7 +80,7 @@ class AuthController extends Controller
         $credentials = $request->only('email', 'password');
         if (Auth::attempt($credentials)) {
             $secretKey = env('JWT_SECRET');
-            $expirationTime = time() + 3600; // Hạn sử dụng của token là 1 giờ (3600 giây)
+            $expirationTime = time() + 360000; // Hạn sử dụng của token là 1 giờ (3600 giây)
 
             $tokenData = [
                 'userId' => $user->id,
@@ -113,13 +114,39 @@ class AuthController extends Controller
                 'email' => $decoded->email,
                 'password' => $decoded->password,
             ];
-            // return response()->json($userData);
-            User::create($userData);
-            return response()->json("Đăng ký thành công!", 201);
+            
+            // Create the user
+            $user = User::create($userData);
+
+            // Define expiration time
+            $expirationTime = time() + 360000;
+
+            // Create token data
+            $tokenData = [
+                'userId' => $user->id,
+                'exp' => $expirationTime,
+            ];
+
+            // Encode token
+            $newToken = JWT::encode($tokenData, $secretKey, 'HS256');
+
+            // Set cookie
+            setcookie('access_token', $newToken, [
+                'expires' => $expirationTime,
+                'path' => '/',
+                'domain' => '127.0.0.1',
+                'samesite' => 'None',
+                'secure' => true,
+                'httponly' => true
+            ]);
+
+            // Redirect user
+            return Redirect::to('http://localhost:3006');
         } catch (\Exception $e) {
             return response()->json("err", 401);
         }
     }
+
 
     function googleAuth(Request $request)
     {

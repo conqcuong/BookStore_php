@@ -42,7 +42,7 @@ const columns = [
         const dispatch = useDispatch();
         const [totalPrice, setTotalPrice] = useState(0);
         const dataCarts = useSelector((state:any) => state?.order?.carts);
-
+        const user = useSelector((state:any) => state?.auth.currentUser);
         const { order: dataOrder, stepOrder } = useSelector((state:any) => state?.order);
         let idProductOrder:any;
         const navigate = useNavigate();
@@ -197,22 +197,37 @@ const columns = [
                                 <span>{formatVnd(totalPrice)}đ</span>
                             </Space>
                             <div className="w-full flex flex-col gap-2 mt-3">
-                                <Button
-                                    size="large"
-                                    type="primary"
-                                    danger
-                                    className="w-full"
-                                    onClick={() => {
-                                        if (idProductOrder) {
-                                            dispatch(handleProductToOrder([dataCarts, idProductOrder]));
-                                            dispatch(handleStepOrder("next"));
-                                        } else {
-                                            message.error("Vui lòng chọn sản phẩm.");
-                                        }
-                                    }}
-                                >
-                                    Mua hàng
-                                </Button>
+                                {/* Kiểm tra xem người dùng đã đăng nhập hay chưa */}
+                                {user ? (
+                                    <Button
+                                        size="large"
+                                        type="primary"
+                                        danger
+                                        className="w-full"
+                                        onClick={() => {
+                                            if (idProductOrder) {
+                                                dispatch(handleProductToOrder([dataCarts, idProductOrder]));
+                                                dispatch(handleStepOrder("next"));
+                                            } else {
+                                                message.error("Vui lòng chọn sản phẩm.");
+                                            }
+                                        }}
+                                    >
+                                        Mua hàng
+                                    </Button>
+                                ) : (
+                                    <Button
+                                        size="large"
+                                        type="primary"
+                                        danger
+                                        className="w-full"
+                                        onClick={() => {
+                                            message.error("Vui lòng đăng nhập để mua hàng.");
+                                        }}
+                                    >
+                                        Mua hàng
+                                    </Button>
+                                )}
                             </div>
                         </div>
                     </div>

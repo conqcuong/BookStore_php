@@ -71,13 +71,13 @@ img {
   vertical-align: middle;
 }
 
-.flex .p-3 {
+.navbar .nav-link {
   position: relative;
   text-decoration: none;
   color: #1a1a1a;
 }
 
-.flex .p-3::after {
+.navbar .nav-link::after {
   content: "";
   position: absolute;
   left: 50%;
@@ -89,11 +89,11 @@ img {
   transition: width 0.3s ease;
 }
 
-.flex .p-3:hover::after {
+.navbar .nav-link:hover::after {
   width: 60%;
 }
 
-.flex .p-3.active::after {
+.navbar .nav-link.active::after {
   width: 60%;
 }
 

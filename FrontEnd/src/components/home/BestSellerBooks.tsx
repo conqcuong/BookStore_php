@@ -1,4 +1,3 @@
-import React, { useEffect, useState } from 'react'
 import {BookCards} from './BookCards';
 
 export const BestSellerBooks = () => {

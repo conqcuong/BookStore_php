@@ -6,6 +6,7 @@ import { ShopPage } from "./pages/ShopPage";
 import { DetailPage } from "./pages/DetailPage";
 import { OrderPage } from "./pages/OrderPage";
 import { HistoryOrderPage } from "./pages/HistoryOrderPage";
+import { NotFound } from "./pages/NotFound";
 
 export {
     LoginPage,
@@ -15,5 +16,6 @@ export {
     ShopPage,
     DetailPage,
     OrderPage,
-    HistoryOrderPage
+    HistoryOrderPage,
+    NotFound
 }

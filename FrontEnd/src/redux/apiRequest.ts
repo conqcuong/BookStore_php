@@ -1,3 +1,4 @@
+import { message } from 'antd';
 import axios from "axios";
 import { loginStart, loginFail, loginSuccess, createStart, createSuccess, createFail,getLoginStart, getLoginSuccess, getLoginFail, logoutSuccess } from "./slice/authSlice";
 import {getAllStart, getAllSuccess, getAllFail} from "./slice/userSlice";
@@ -14,8 +15,13 @@ export const loginUser = (newForm: any, navigate:any) => async (dispatch: any) =
         );
         dispatch(loginSuccess(res.data));
         navigate("/");
-    } catch (err) {
+    } catch (err:any) {
         dispatch(loginFail());
+        if (err.response && err.response.data) {
+            alert(err.response.data.message);
+        } else {
+            console.log('Không thể kết nối severs.');
+        }
     }
 };
 
@@ -27,7 +33,7 @@ export const getLogin = () => async (dispatch: any) => {
             { withCredentials: true }
         );
         dispatch(getLoginSuccess(res.data));
-    } catch (err) {
+    } catch (err:any) {
         dispatch(getLoginFail());
     }
 };
@@ -40,11 +46,16 @@ export const RegisterUser = (newForm: any, navigate:any) => async (dispatch: any
             newForm,
             { withCredentials: true }
         );
-        // console.log(res.data);
         dispatch(createSuccess());
-        navigate('/login')
-    } catch (err) {
+        navigate('/login');
+        alert('Check mail để kích hoạt tài khoản!');
+    } catch (err:any) {
         dispatch(createFail());
+        if (err.response && err.response.data) {
+            alert(err.response.data.message.email);
+        } else {
+            console.log('Không thể kết nối severs.');
+        }   
     }
 };
 

@@ -73,7 +73,7 @@ export const RegisterPage = () => {
                     <Input.Password style={{ background: "transparent", borderColor: "rgb(209 213 219) ",}} placeholder="••••••••" className="flex border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 w-full p-2.5 " />
                 </Form.Item>
                 <Form.Item>
-                    <Button className="w-full min-h-[50px] text-white hover:!text-white bg-blue-700 hover:!bg-blue-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center" htmlType="submit" loading={isSubmit}>Đăng nhập</Button>
+                    <Button className="w-full min-h-[50px] text-white hover:!text-white bg-blue-700 hover:!bg-blue-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center" htmlType="submit" loading={isSubmit}>Đăng ký</Button>
                 </Form.Item>
                 <Form.Item className="text-sm font-semibold text-gray-700">
                     <span>Tài khoản đã có sẵn?</span>

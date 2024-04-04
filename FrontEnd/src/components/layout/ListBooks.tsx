@@ -12,9 +12,9 @@ export const ListBooks = (Props:any) => {
                 <div className="rounded-[8px] border-[2px] border-[#e8e8e8]" key={book.id}>
                     <div className="flex flex-col justify-between">
                         <div className="p-3 w-[220px]">
-                            <div className="mb-2 block">
+                            <div className="mb-2 flex justify-center">
                                 <Link to={`/shop/details/${book.id}`} className="relative overflow-hidden text-center">
-                                    <img className="max-h-[190px] w-auto" src={book.thumbnail_image} alt="" />
+                                    <img className="max-h-[190px] w-auto text-center" src={book.thumbnail_image} alt="" />
                                 </Link>
                             </div>
                             <Link to={`/shop/details/${book.id}`}><h2 className="line-clamp-2 font-semibold">{book.name}</h2></Link>

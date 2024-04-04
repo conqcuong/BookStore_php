@@ -118,7 +118,7 @@ export const OrderCheck = () => {
                 const responseData = await response.json();
                 dataOrder.forEach((item: any) => {
                     dispatch(handleRemoveProductToCart(item.id));
-                });
+                }); 
                 dispatch(handleStepOrder("prev"))
                 window.location.href = responseData
             } catch (error) {
@@ -176,6 +176,10 @@ export const OrderCheck = () => {
                                 {
                                     required: true,
                                     message: "Vui lòng nhập số điện thoại!",
+                                },
+                                {
+                                    pattern: /^\d{10}$/,
+                                    message: "Số điện thoại phải có 10 chữ số!",
                                 },
                             ]}
                         >
