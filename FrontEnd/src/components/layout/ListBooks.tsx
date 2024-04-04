@@ -1,107 +1,43 @@
 import { FireTwoTone } from "@ant-design/icons";
-import { Card, Divider, Rate, Space } from "antd";
-import Meta from "antd/es/card/Meta";
-import { useNavigate } from "react-router-dom";
+import { Space } from "antd";
+import { Link } from "react-router-dom";
 
 export const ListBooks = (Props:any) => {
     const { dataListBooks } = Props;
-    const navigate = useNavigate();
 
-    const toSlug = (str:any) => {
-        // Chuyển hết sang chữ thường
-        str = str.toLowerCase();
-
-        // xóa dấu
-        str = str
-        .normalize("NFD") // chuyển chuỗi sang unicode tổ hợp
-        .replace(/[\u0300-\u036f]/g, ""); // xóa các ký tự dấu sau khi tách tổ hợp
-
-        // Thay ký tự đĐ
-        str = str.replace(/[đĐ]/g, "d");
-
-        // Xóa ký tự đặc biệt
-        str = str.replace(/([^0-9a-z-\s])/g, "");
-
-        // Xóa khoảng trắng thay bằng ký tự -
-        str = str.replace(/(\s+)/g, "-");
-
-        // Xóa ký tự - liên tiếp
-        str = str.replace(/-+/g, "-");
-
-        // xóa phần dư - ở đầu & cuối
-        str = str.replace(/^-+|-+$/g, "");
-
-        // return
-        return str;
-    };
-
-    const formatSold = (n:any) => {
-        if (n < 1000) {
-            return n.toString();
-        } else if (n < 10000) {
-            return (n / 1000).toFixed(1) + " k";
-        } else {
-            return (n / 1000).toFixed(0) + " k";
-        }
-    };
-
-    const handleRedirectBook = (book:any) => {
-        const slug = toSlug(book.mainText);
-        navigate(`/book/${slug}?id=${book._id}`);
-    };
     return (
         <div className="flex flex-wrap justify-start 2xl:gap-4 gap-2">
         {dataListBooks?.map((book:any) => {
             return (
-                <Card
-                    key={book.id}
-                    hoverable
-                    onClick={() => {
-                    handleRedirectBook(book);
-                    }}
-                    bodyStyle={{ padding: 12 }}
-                    className="2xl:w-[15%] xl:w-[19%] lg:w-[24%] sm:w-[49%] w-[99%] border-2 mt-3"
-                    cover={
-                        <img
-                            style={{
-                            width: "100%",
-                            border: "1px solid #e9e9e9",
-                            }}
-                            alt="example"
-                            src={book.thumbnail_image}
-                        />
-                    }
-                    actions={[
-                    <Space
-                        key={1}
-                        size={"small"}
-                        className="flex justify-center books-center"
-                    >
-                        Giao hàng siêu tốc
-                        <FireTwoTone twoToneColor="#eb2f2f" />
-                    </Space>,
-                    ]}
-                >
-                    <Meta
-                    className={"p-0"}
-                    title={book.name}
-                    // description="Tư duy về tiền bạc - Những lựa chọn tài chính đúng đắn và sáng suốt hơn"
-                    />
-                    <Space className="my-2 flex justify-between books-center">
-                    <Rate
-                        disabled
-                        className="xl:text-sm md:text-[10px]"
-                        defaultValue={5}
-                    />
-                    <Divider type="vertical" style={{ margin: "0" }} />
-                    <Space key={2} className="text-[10px]">
-                        Đã bán:{formatSold(book.sold)}
-                    </Space>
-                    </Space>
-                    <Space className="font-semibold mt-2">
-                    {`${book.price}`.replace(/\B(?=(\d{3})+(?!\d))/g, ",")}đ
-                    </Space>
-                </Card>
+                <div className="rounded-[8px] border-[2px] border-[#e8e8e8]" key={book.id}>
+                    <div className="flex flex-col justify-between">
+                        <div className="p-3 w-[220px]">
+                            <div className="mb-2 block">
+                                <Link to={`/shop/details/${book.id}`} className="relative overflow-hidden text-center">
+                                    <img className="max-h-[190px] w-auto" src={book.thumbnail_image} alt="" />
+                                </Link>
+                            </div>
+                            <Link to={`/shop/details/${book.id}`}><h2 className="line-clamp-2 font-semibold">{book.name}</h2></Link>
+                            <div className="mt-1">
+                                <p>
+                                    <span className='text-[#C92127] font-semibold'>{(book.price).toLocaleString().replace(/\B(?=(\d{3})+(?!\d))/g, '.')} đ</span>
+                                </p>
+                            </div>
+                            <div>
+                                <p className='text-[10px]'><span className='text-[#7A7E7F] mt-[1px]'>Đã bán </span>{book.sold}</p>
+                            </div>
+                        </div>     
+                        <hr className="my-2"/>
+                        <Space
+                            key={1}
+                            size={"small"}
+                            className="flex justify-center books-center mb-2"
+                        >
+                            Giao hàng siêu tốc
+                            <FireTwoTone twoToneColor="#eb2f2f" />
+                        </Space> 
+                    </div>
+                </div>
             );
         })}
         </div>

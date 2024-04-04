@@ -4,28 +4,29 @@ import {
     Divider,
     Form,
     Input,
-    message,
-    notification,
 } from "antd";
-import { NavLink, useNavigate } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 import { useState } from "react";
 import { OAuth } from '../components/layout/OAuth'
 import { useDispatch } from "react-redux";
 import { loginUser } from "../redux/apiRequest";
 import { AnyAction } from "redux";
+import { useNavigate } from "react-router-dom";
 
 export const LoginPage = () => {
     const [isSubmit, setIsSubmit] = useState(false);
-    const navigate = useNavigate();
     const dispatch = useDispatch();
+    const navigate = useNavigate();
 
     const onFinish = async ({ email, password }:any) => {
+        setIsSubmit(true);
         const newUser = {
             email: email,
             password: password,
         };
         try {
-            dispatch(loginUser(newUser) as unknown as AnyAction);
+            dispatch(loginUser(newUser, navigate) as unknown as AnyAction);
+            setIsSubmit(false);
         } catch (err:any) {
             console.log(err);
         }

@@ -4,9 +4,11 @@ import { signInWithPopup, GoogleAuthProvider, getAuth } from 'firebase/auth';
 import { loginGoogle } from '../../redux/apiRequest';
 import { AnyAction } from "redux";
 import { useDispatch } from "react-redux";
+import { useNavigate } from 'react-router-dom';
 
 export const OAuth = () => {
     const dispatch = useDispatch();
+    const navigate = useNavigate();
     const auth = getAuth(app);
     const handleGoogleClick = async () => {
         const provider = new GoogleAuthProvider();
@@ -18,7 +20,7 @@ export const OAuth = () => {
                 googlePhotoUrl: resultsFromGoogle.user.photoURL,
                 name: resultsFromGoogle.user.displayName,
             }
-            dispatch(loginGoogle(formData) as unknown as AnyAction);
+            dispatch(loginGoogle(formData, navigate) as unknown as AnyAction);
         } catch (err:any) {
             console.error(err.message);
         }

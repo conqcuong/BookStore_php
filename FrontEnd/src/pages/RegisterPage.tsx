@@ -1,11 +1,8 @@
 import {
     Button,
-    Checkbox,
     Divider,
     Form,
     Input,
-    message,
-    notification,
 } from "antd";
 import { NavLink, useNavigate } from "react-router-dom";
 import { useState } from "react";
@@ -17,6 +14,7 @@ import { AnyAction } from "redux";
 export const RegisterPage = () => {
     const [isSubmit, setIsSubmit] = useState(false);
     const dispatch = useDispatch();
+    const navigate = useNavigate();
     const onFinish = async ({ email, password, fullName }:any) => {
         const newUser = {
             name: fullName,
@@ -24,7 +22,7 @@ export const RegisterPage = () => {
             password: password,
         };
         try {
-            dispatch(RegisterUser(newUser) as unknown as AnyAction);
+            dispatch(RegisterUser(newUser, navigate) as unknown as AnyAction);
         } catch (err:any) {
             console.log(err);
         }

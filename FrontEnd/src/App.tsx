@@ -4,7 +4,10 @@ import {
   RegisterPage,
   HomePage,
   PaySuccess,
-  ShopPage
+  ShopPage,
+  DetailPage,
+  OrderPage,
+  HistoryOrderPage
 } from "./Routes"
 import { DashBoard } from "./pages/admin/DashBoard"
 import Index from "./pages/admin"
@@ -13,10 +16,9 @@ import { UserTable } from "./pages/admin/User/UserTable"
 import { ProductsTable } from "./pages/admin/products/ProductsTable"
 import { useEffect } from "react";
 import { getLogin } from "./redux/apiRequest";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { AnyAction } from "redux";
 import { Test } from "./test/Test"
-import Test1 from "./test/Test1"
 
 
 function App() {
@@ -43,9 +45,11 @@ function App() {
         <Route path="/" element={<HomePage/>} />
         <Route path="/shop" element={<ShopPage/>} />
         <Route path="/pay-success" element={<PaySuccess/>} />
+        <Route path="/shop/details/:id" element={<DetailPage/>} />
+        <Route path="/order" element={<OrderPage/>} />
+        <Route path="/history-order" element={<HistoryOrderPage/>} />
         {/* Trang test */}
         <Route path="/test" element={<Test/>} />
-        <Route path="/test1" element={<Test1/>} />
       </Routes> 
       </Router>
     </>

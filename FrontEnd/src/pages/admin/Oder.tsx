@@ -1,18 +1,45 @@
 import { Table, Tag } from "antd";
-import { useEffect, useState } from "react";
 import moment from "moment";
-import { v4 as uuidv4 } from "uuid";
+import { useEffect, useState } from "react";
+import axios from "axios";
 
-function formatVnd(value:any) {
-    return `${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-}
+export const Oder = () => {
+  const [expandedRowKeys, setExpandedRowKeys] = useState([]);
+  const [dataOrderHistory, setDataOrderHistory] = useState([]);
 
-const columns = [
+  useEffect(() => {
+    // Fetch data from API
+    axios.get("http://127.0.0.1:8000/api/product/getOrder")
+      .then(response => {
+        // Xử lý dữ liệu nhận được từ API và cập nhật state
+        const formattedData = response.data.map(order => {
+          return {
+            ...order,
+            key: order.id, // Sử dụng trường id làm key
+          };
+        });
+        setDataOrderHistory(formattedData);
+      })
+      .catch(error => {
+        console.error("Error fetching data:", error);
+      });
+  }, []);
+
+  const handleExpand = (record) => {
+    const expanded = expandedRowKeys.includes(record.id);
+    if (expanded) {
+      setExpandedRowKeys(expandedRowKeys.filter((key) => key !== record.id));
+    } else {
+      setExpandedRowKeys([...expandedRowKeys, record.id]);
+    }
+  };
+
+  const columns = [
     {
       title: "Thời gian",
-      dataIndex: "createdAt",
-      key: uuidv4(),
-      render: (text:any) => {
+      dataIndex: "created_at",
+      key: "createdAt",
+      render: (text) => {
         return `${moment(text).subtract(10, "days").calendar()} - ${moment(
           text
         ).format("LT")}`;
@@ -21,14 +48,14 @@ const columns = [
     {
       title: "Tổng tiền",
       dataIndex: "totalPrice",
-      key: uuidv4(),
-      render: (text:any) => {
+      key: "totalPrice",
+      render: (text) => {
         return <>{formatVnd(text)}đ</>;
       },
     },
     {
       title: "Trạng thái",
-      key: uuidv4(),
+      key: "status",
       dataIndex: "status",
       render: () => (
         <>
@@ -40,96 +67,63 @@ const columns = [
     },
     {
       title: "Đơn mua",
-      key: uuidv4(),
+      key: "orderDetail",
       width: 300,
-      render: (_:any, record:any) => {
-        return record.detail.map((values:any) => {
-          return (
-            <div key={uuidv4()} className="flex justify-start items-center">
-              <h5 className="flex-1">{values.bookName}</h5>
-              <span className="ml-3">X{values.quantity}</span>
-            </div>
-          );
-        });
+      render: (_, record) => {
+        return record.items.map((item, index) => (
+          <div key={index} className="flex justify-start items-center">
+            <h5 className="flex-1">{item.product_name}</h5>
+            <span className="ml-3">X{item.quantity}</span>
+          </div>
+        ));
       },
+    },
+    {
+      title: "Hành động",
+      key: "action",
+      render: (_, record) => (
+        <button onClick={() => handleExpand(record)}>
+          {expandedRowKeys.includes(record.id) ? "Thu gọn" : "Mở rộng"}
+        </button>
+      ),
     },
   ];
 
-  const orderData = {
-    address: "Illum sunt dolorem, Hòa Bình, Huyện Lạc Thủy, Xã Yên Bồng",
-    createdAt: "2024-02-21T18:21:13.147Z",
-    detail: [
-      {
-        bookName: "Đại Việt Sử Ký Toàn Thư Trọn Bộ",
-        quantity: 3,
-        _id: "653f7b2ee5d85450c173fb73"
-      },
-      {
-        bookName: "Salt, Fat, Acid, Heat: Mastering the Elements of Good Cooking",
-        quantity: 3,
-        _id: "653f7b2ee5d85450c173fb71"
-      }
-    ],
-    key: "737d21d6-8466-4324-bdb9-d30a154f5822",
-    name: "Bree Simon",
-    phone: "90988083861",
-    totalPrice: 2460000,
-    type: "COD",
-    updatedAt: "2024-02-21T18:21:13.147Z",
-    __v: 0,
-    _id: "65d63f19c3ec1933b07ffcab"
-  };
-
-export const Oder = () => {
-    const [dataOrderHistory, setDataOrderHistory] = useState([orderData]);
-
   return (
-    <div className="p-3" key={uuidv4()}>
-    <h3 className="font-sans">Lịch sử đặt hàng:</h3>
-    <Table
-      columns={columns}
-      expandable={{
-        expandRowByClick: true,
-        expandedRowRender: (record) => {
-          return (
+    <div className="p-3">
+      <h3 className="font-sans">Lịch sử đặt hàng:</h3>
+      <Table
+        columns={columns}
+        expandable={{
+          expandRowByClick: false,
+          expandedRowRender: (record) => (
             <Table
-              pagination={false}
               columns={[
-                {
-                  title: "Tên người mua",
-                  dataIndex: "user",
-                  key: uuidv4(),
-                },
-                {
-                  title: "Số điện thoại",
-                  dataIndex: "phone",
-                  key: uuidv4(),
-                },
-                {
-                  title: "Địa chỉ",
-                  dataIndex: "address",
-                  key: uuidv4(),
-                },
-                {
-                  title: "Chi tiết",
-                  key: uuidv4(),
-                },
+                { title: "Tên người mua", dataIndex: "user_name", key: "userName" },
+                { title: "Số điện thoại", dataIndex: "phone", key: "phone" },
+                { title: "Địa chỉ", dataIndex: "address", key: "address" },
+                { title: "Chi tiết", dataIndex: "detail", key: "detail", render: (text, record) => (
+                    <ul>
+                      {record.items.map((item, index) => (
+                        <li key={index}>{item.product_name} - {item.quantity}</li>
+                      ))}
+                    </ul>
+                )},
               ]}
-              dataSource={[
-                {
-                  key: uuidv4(),
-                  user: record.name,
-                  phone: record.phone,
-                  address: record.address,
-                  detail: record.detail,
-                },
-              ]}
+              dataSource={[record]}
+              pagination={false}
             />
-          );
-        },
-      }}
-      dataSource={dataOrderHistory}
-    />
-  </div>
-  )
+          ),
+          expandedRowKeys,
+          onExpand: (_, record) => handleExpand(record),
+        }}
+        dataSource={dataOrderHistory}
+        rowKey="id" // Đặt rowKey là trường id
+      />
+    </div>
+  );
+};
+
+function formatVnd(value:any) {
+  return `${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 }

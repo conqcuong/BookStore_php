@@ -7,6 +7,7 @@ use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\PaymentController;
 
 /*
 |--------------------------------------------------------------------------
@@ -24,7 +25,7 @@ Route::prefix('auth')->group(function () {
     Route::post('register', [AuthController::class, 'register']);
     Route::get('active/{token}', [AuthController::class, 'active']);
     Route::post('google', [AuthController::class, 'googleAuth']);
-
+    Route::post('logout', [AuthController::class, 'logout']);
     Route::middleware('verifyToken')->group(function () {
         Route::get('getAccount', [AuthController::class, 'getAccount']);
     });
@@ -51,6 +52,7 @@ Route::prefix('product')->group(function () {
     Route::get('/price', [ProductController::class, 'lowToHigh']);
     Route::get('/-price', [ProductController::class, 'highToLow']);
     Route::get('/-updatedAt', [ProductController::class, 'newest']);
+    Route::get('/getOrder', [ProductController::class, 'getOrder']);
 
     Route::middleware('verifyTokenRole')->group(function () {
         Route::get('getAll', [ProductController::class, 'getAll']);
@@ -76,3 +78,6 @@ Route::prefix('category')->group(function () {
 
 Route::post('upload/', [Controller::class, 'uploadImage']);
 Route::get('test/', [AuthController::class, 'test']);
+
+Route::post('/vnpay_payment', [PaymentController::class, 'vnpay_payment']);
+Route::get('/success', [PaymentController::class, 'handleTransaction']);

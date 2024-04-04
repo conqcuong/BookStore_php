@@ -4,6 +4,7 @@ import storage from "redux-persist/lib/storage";
 import authReducer from './slice/authSlice';
 import userReducer from './slice/userSlice';
 import productReducer from './slice/productSlice';
+import orderReducer from './slice/orderSlice';
 
 const persistConfig = {
     key: 'root',
@@ -13,7 +14,7 @@ const persistConfig = {
     // whitelist: ['key1', 'key2'],
 }
 
-const rootReducer = combineReducers({auth: authReducer, user: userReducer, product: productReducer}); 
+const rootReducer = combineReducers({auth: authReducer, user: userReducer, product: productReducer, order: orderReducer}); 
 
 const persistedReducer = persistReducer(persistConfig, rootReducer)
 

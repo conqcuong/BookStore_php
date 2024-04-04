@@ -1,10 +1,10 @@
 import axios from "axios";
-import { loginStart, loginFail, loginSuccess, createStart, createSuccess, createFail,getLoginStart, getLoginSuccess, getLoginFail } from "./slice/authSlice";
+import { loginStart, loginFail, loginSuccess, createStart, createSuccess, createFail,getLoginStart, getLoginSuccess, getLoginFail, logoutSuccess } from "./slice/authSlice";
 import {getAllStart, getAllSuccess, getAllFail} from "./slice/userSlice";
 import {getAllProductStart, getAllProductSuccess, getAllProductFail, fetchBooks} from "./slice/productSlice";
 
 // authSlice
-export const loginUser = (newForm: any) => async (dispatch: any) => {
+export const loginUser = (newForm: any, navigate:any) => async (dispatch: any) => {
     dispatch(loginStart());
     try {
         const res = await axios.post(
@@ -13,6 +13,7 @@ export const loginUser = (newForm: any) => async (dispatch: any) => {
             { withCredentials: true }
         );
         dispatch(loginSuccess(res.data));
+        navigate("/");
     } catch (err) {
         dispatch(loginFail());
     }
@@ -31,7 +32,7 @@ export const getLogin = () => async (dispatch: any) => {
     }
 };
 
-export const RegisterUser = (newForm: any) => async (dispatch: any) => {
+export const RegisterUser = (newForm: any, navigate:any) => async (dispatch: any) => {
     dispatch(createStart());
     try {
         await axios.post(
@@ -41,6 +42,7 @@ export const RegisterUser = (newForm: any) => async (dispatch: any) => {
         );
         // console.log(res.data);
         dispatch(createSuccess());
+        navigate('/login')
     } catch (err) {
         dispatch(createFail());
     }
@@ -88,7 +90,7 @@ export const restore = (id:any) => {
     });
 }
 
-export const loginGoogle = (newForm: any) => async (dispatch: any) => {
+export const loginGoogle = (newForm: any, navigate:any) => async (dispatch: any) => {
     dispatch(loginStart());
     try {
         const res = await axios.post(
@@ -97,6 +99,7 @@ export const loginGoogle = (newForm: any) => async (dispatch: any) => {
             { withCredentials: true }
         );
         dispatch(loginSuccess(res.data));
+        navigate('/')
     } catch (err:any) {
         dispatch(loginFail());
         if (err.response && err.response.data) {
@@ -106,6 +109,19 @@ export const loginGoogle = (newForm: any) => async (dispatch: any) => {
         }   
     }
 };
+
+export const logOutUser = (navigate: any) => async (dispatch: any) => {
+    try {
+        const res = await axios.post("http://127.0.0.1:8000/api/auth/logout/", null, {
+            withCredentials: true
+        });
+        dispatch(logoutSuccess());
+        navigate("/login");
+    } catch (err) {
+        console.log(err);
+    }
+};
+
 //userSlice
 export const getAll = () => async (dispatch: any) => {
     dispatch(getAllStart());
@@ -124,7 +140,7 @@ export const getAllProduct = () => async (dispatch: any) => {
     dispatch(getAllProductStart());
     try {
         const res = await axios.get(
-            "http://127.0.0.1:8000/api/product/getAll",
+            "http://127.0.0.1:8000/api/product/getAll/",
             { withCredentials: true }
         );
         dispatch(getAllProductSuccess(res.data));

@@ -6,6 +6,8 @@ use App\Models\Product;
 use App\Models\Category;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
+use App\Models\Order;
+use App\Models\OrderItem;
 
 class ProductController extends Controller
 {
@@ -345,6 +347,74 @@ class ProductController extends Controller
         return response()->json([
             'products' => $formattedProducts,
         ]);
+    }
+
+    public function test(Request $request)
+    {
+        $jsonData = '{
+            "items": [
+                {
+                    "product_id": 1,
+                    "quantity": "3"
+                },
+                {
+                    "product_id": 2,
+                    "quantity": "1"
+                }
+            ],
+            "user_id": 1,
+            "phone": "34324",
+            "address": "ẻerter",
+            "note": "ẻttrtr",
+            "totalPrice": "341000"
+        }';
+
+        $data = json_decode($jsonData, true);
+
+        // Tạo đơn hàng
+        $order = Order::create([
+            'user_id' => $data['user_id'],
+            'phone' => $data['phone'],
+            'address' => $data['address'],
+            'note' => $data['note'],
+            'total_price' => $data['totalPrice'],
+        ]);
+
+        // Thêm mỗi mục đơn hàng vào bảng order_items
+        foreach ($data['items'] as $item) {
+            OrderItem::create([
+                'order_id' => $order->id,
+                'product_id' => $item['product_id'],
+                'quantity' => $item['quantity'],
+            ]);
+        }
+    }
+
+    public function getOrder()
+    {
+        $orders = Order::with(['items.product', 'user'])->get();
+
+        $formattedOrders = $orders->map(function ($order) {
+            return [
+                'items' => $order->items->map(function ($item) {
+                    return [
+                        'product_name' => $item->product->name,
+                        'product_price' => number_format($item->product->price, 0, '', ''),
+                        'quantity' => $item->quantity,
+                    ];
+                }),
+                'user_name' => $order->user->name,
+                'phone' => $order->phone,
+                'address' => $order->address,
+                'note' => $order->note,
+                'totalPrice' => number_format($order->total_price, 0, '', ''),
+                'created_at' => $order->created_at,
+                'id' => $order->id,
+                'user_id' => $order->user_id,
+            ];
+        });
+
+        return response()->json($formattedOrders);
     }
 
 }

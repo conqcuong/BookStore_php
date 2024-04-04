@@ -51,9 +51,14 @@ const authSlice = createSlice({
         createFail: (state) => {
             state.loading = false;
             state.error = true;
-        }
+        },
+        // Logout
+        logoutSuccess: (state) => {
+            state.loading = false;
+            state.currentUser = null;
+        },
     }
-})  
+})
 
 export const { 
     loginStart,
@@ -64,7 +69,8 @@ export const {
     createFail,
     getLoginStart,
     getLoginSuccess,
-    getLoginFail
+    getLoginFail,
+    logoutSuccess
 } = authSlice.actions;
 
 export default authSlice.reducer;

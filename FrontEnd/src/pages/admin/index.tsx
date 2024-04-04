@@ -10,7 +10,10 @@ import {
   UserOutlined,
 } from "@ant-design/icons";
 import { Layout, Menu, Button, Space, Divider } from "antd";
-import { DashBoard } from "./DashBoard";
+import { useDispatch } from "react-redux";
+import { getAllProduct } from "../../redux/apiRequest";
+import { AnyAction } from "@reduxjs/toolkit";
+import { useEffect } from "react";
 import type { MenuProps } from 'antd';
 import { UserNavigation } from "../../components/layout/UserNavigation";
 
@@ -56,6 +59,11 @@ const MenuAdmin = [
 
 const Index = () => {
   const [collapsed, setCollapsed] = useState(false);
+  const dispatch = useDispatch();
+    
+    useEffect(() => {
+        dispatch(getAllProduct() as unknown as AnyAction);
+    }, []);
 
   return (
     <Layout className="layout">

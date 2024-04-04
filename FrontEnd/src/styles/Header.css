@@ -1,0 +1,166 @@
+.navbar {
+    align-items: center;
+    background-color: white;
+    border-bottom: 1px solid #e8ebed;
+    display: flex;
+    font-size: 14px;
+    height: 66px;
+    left: 0;
+    padding: 0 28px;
+    position: sticky;
+    right: 0;
+    top: 0;
+    z-index: 20;
+}
+
+.navbar__logo,
+.navbar__body,
+.navbar__actions {
+    flex: 1 1;
+}
+
+.navbar__body .search__wrapper {
+    border: 2px solid #e8e8e8;
+    border-radius: 20px;
+    flex: 1 1;
+    height: 40px;
+    padding: 0 16px 0 8px;
+    transition: border-color .2s ease-in-out;
+    width: 420px;
+}
+
+.navbar__body .search__wrapper:focus-within {
+    border-color: black;
+}
+
+.navbar__body .search__wrapper .search__searchIcon {
+    background-color: #ffffff;
+    background-image: url(../imgs/search.svg);
+    background-position: 50%;
+    background-repeat: no-repeat;
+    background-size: 18px;
+    border-radius: 50%;
+    height: 32px;
+    opacity: .7;
+    transition: opacity .2s ease-in-out;
+    width: 30px;
+}
+
+.navbar__body .search__wrapper .search__searchIcon:hover {
+    opacity: 1;
+}
+
+.navbar__body .search__wrapper .search__input {
+    border: none;
+    caret-color: #444;
+    flex: 1 1;
+    height: 100%;
+    outline: none;
+    padding: 0 4px;
+}
+
+.navbar__body ul {
+    background-color: #ffffff;
+    overflow: hidden;
+    color: #333333;
+    padding-left: 0;
+    box-shadow: rgba(0, 0, 0, 0.2) 0px -4px 32px;
+    transition: all .3s ease-in-out;
+    animation: module_fadeln .3s ease;
+    border-radius: 10px;
+}
+
+.navbar__body .search__result {
+    width: 420px;
+    color: #888888;
+    font-size: 14px;
+    max-height: calc(90vh - 66px);
+    min-height: 50px;
+    min-width: 230px;
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    padding: 12px 24px;
+}
+
+.navbar__actions {
+    align-items: center;
+    display: flex;
+    justify-content: flex-end;
+}
+
+.navbar__actions .navbar__myLearn {
+    background-color: transparent;
+    color: #333;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: 600;
+    margin-right: 16px;
+    padding: 8px;
+}
+
+.navbar__actions .navbar__ul {
+    animation: module_fadeln .3s ease;
+    background-color: #ffffff;
+    border-radius: 10px;
+    box-shadow: 0 -4px 32px rgba(0, 0, 0, .2);
+    color: #1d2129;
+    margin: 0;
+    overflow: hidden;
+    padding-left: 0;
+    transition: all .3s ease-in-out;
+    will-change: opacity, transform;
+    min-width: 230px;
+    padding: 8px 24px !important;
+}
+
+.authModal {
+    align-items: center;
+    display: flex;
+    inset: 0;
+    justify-content: center;
+    position: fixed;
+    z-index: 999;
+}
+
+.authModal .authModal__overlay {
+    -webkit-animation-duration: .3s;
+    animation-duration: .3s;
+    -webkit-animation-name: login__inline;
+    animation-name: login__inline;
+    -webkit-animation-timing-function: linear;
+    animation-timing-function: linear;
+    background: rgba(0, 0, 0, .4);
+    inset: 0;
+    position: absolute;
+}
+
+.authModal .authModal__content {
+    -webkit-animation-duration: .3s;
+    animation-duration: .3s;
+    -webkit-animation-name: login__inline;
+    animation-name: login__inline;
+    background: #ffffff;
+    border-radius: 16px;
+    height: min(660px, 100% - 32px);
+    overflow: hidden;
+    position: relative;
+    width: min(540px, 100% - 32px);
+    z-index: 1;
+}
+
+.authModal .authModal__content .authModal__close {
+    align-items: center;
+    background: rgba(22, 24, 35, .03);
+    border-radius: 50%;
+    color: #333;
+    cursor: pointer;
+    display: flex;
+    font-size: 28px;
+    height: 40px;
+    justify-content: center;
+    line-height: 0;
+    position: absolute;
+    right: 16px;
+    top: 16px;
+    width: 40px;
+}

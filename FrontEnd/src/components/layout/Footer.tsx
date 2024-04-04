@@ -2,7 +2,7 @@ import Logo from '../../assets/imgs/f8-icon.png'
 import DMCA from '../../assets/imgs/DMCA.png'
 import { footer_product, tools_list, list_f8 } from '../../static/data'
 import { Link } from "react-router-dom"
-import { FaSquareYoutube, FaSquareFacebook, FaTiktok } from 'react-icons/fa6'
+import { FaSquareYoutube, FaSquareFacebook, FaTiktok, FaBlog } from 'react-icons/fa6'
 
 export const Footer = () => {
   return (
@@ -14,8 +14,7 @@ export const Footer = () => {
                         <div className='flex justify-start lg:justify-center'>
                             <div>
                                 <div className='flex items-center'>
-                                    <Link to="/"><img className='rounded-lg w-[38px] h-[38px] mr-2.5' src={Logo} alt="F8" /></Link>
-                                    <h2 className='font-bold text-[#fff]'>Học Lập Trình Để Đi Làm</h2>
+                                    <Link to='/' className='text-2xl font-bold text-blue-700 flex items-center gap-2'><FaBlog className=' inline-block'/>Books</Link>
                                 </div>
                                 <p className="relative text-14px leading-[22px] my-3.5">
                                     Điện thoại: <a href="tel:0246.329.1102">0246.329.1102</a>
@@ -77,11 +76,11 @@ export const Footer = () => {
                     <div className='block w-1/4 px-3 md:w-3/6 md:px-2 sm:w-full sm:px-1'>
                         <div className="flex justify-start lg:justify-center text-14px ">
                             <div>
-                                <h2 className="text-[18px] leading-[28px] uppercase  mb-[15px] font-semibold text-[#fff] sm:mt-9">CÔNG TY CỔ PHẦN CÔNG NGHỆ GIÁO DỤC F8</h2>
+                                <h2 className="text-[18px] leading-[28px] uppercase  mb-[15px] font-semibold text-[#fff] sm:mt-9">CÔNG TY CỔ PHẦN HAI THÀNH VIÊN</h2>
                                 <ul className="my-2.5">
                                     <li className='mb-2'>Mã số thuế: 0109922901</li>
                                     <li className='mb-2'>Ngày thành lập: 04/03/2022</li>
-                                    <li className='mb-0.5'>Lĩnh vực: Công nghệ, giáo dục, lập trình. F8 xây dựng và phát triển những sản phẩm mang lại giá trị cho cộng đồng.</li>
+                                    <li className='mb-0.5'>Lĩnh vực: Công nghệ, giáo dục, lập trình. Shop Books xây dựng và phát triển những sản phẩm mang lại giá trị cho cộng đồng.</li>
                                 </ul>
                             </div>
                         </div>

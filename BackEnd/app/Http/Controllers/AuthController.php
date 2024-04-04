@@ -201,4 +201,17 @@ class AuthController extends Controller
         $token = JWT::encode($tokenData, $secretKey, 'HS256');
         return response()->json($token);
     }
+
+    public function logout()
+    {
+        setcookie('access_token', '', [
+            'expires' => time() - 3600,
+            'path' => '/',
+            'domain' => '127.0.0.1',
+            'samesite' => 'None',
+            'secure' => true,
+            'httponly' => true
+        ]);
+        return response()->json(['message' => 'Đã đăng xuất thành công.']);
+    }
 }
