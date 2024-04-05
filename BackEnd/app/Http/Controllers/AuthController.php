@@ -181,7 +181,7 @@ class AuthController extends Controller
                 ];
                 $newUser = User::create($userData);
                 $secretKey = env('JWT_SECRET');
-                $expirationTime = time() + 3600;
+                $expirationTime = time() + 360000;
                 $tokenData = [
                     'userId' => $newUser->id,
                     'exp' => $expirationTime,
