@@ -191,6 +191,7 @@ export const  UpdateProduct = (Props: any) => {
                     key={2}
                     size="large"
                     type="primary"
+                    className='bg-blue-500'
                     onClick={() => {
                         form.submit();
                     }}

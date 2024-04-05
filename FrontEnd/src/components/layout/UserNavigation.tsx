@@ -3,6 +3,8 @@ import { Avatar, Button, Dropdown, Space, message, Menu } from "antd";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import { useState } from "react";
+import { logOutUser } from "../../redux/apiRequest";
+import { AnyAction } from "redux";
 // import ManagerAccount from "./ManagerAccount"; 
 export const UserNavigation = () => {
     const dispatch = useDispatch();
@@ -14,6 +16,7 @@ export const UserNavigation = () => {
     const handleMenuClick = (item:any) => {
         if (item.key === "logout") {
             message.info("Logged out successfully");
+            dispatch(logOutUser(navigate) as unknown as AnyAction);
         } else if (item.key === "user") {
             setOpenModal(true);
         } else {
@@ -26,18 +29,6 @@ export const UserNavigation = () => {
         {
             label: <Link to="/">Trang chủ</Link>,
             key: "/",
-        },
-        {
-            label: user?.role === "admin" ? <Link to="/admin/dash-board">Trang quản trị</Link> : null,
-            key: "/admin/dash-board",
-        },        
-        {
-            label: <div onClick={() => setOpenModal(true)}>Quản lý tài khoản</div>,
-            key: "user",
-        },
-        {
-            label: <Link to="/orderhistory">Lịch sử đơn hàng</Link>,
-            key: "quanLy",
         },
         {
             type: "divider",

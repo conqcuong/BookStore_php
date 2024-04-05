@@ -49,7 +49,7 @@ export const AddUser = (Props:any) => {
                 <Button key={1} size="large" onClick={() => setIsModalOpen(false)}>
                     Hủy bỏ
                 </Button>,
-                <Button key={2} size="large" type="primary" onClick={() => {form.submit();}}loading={submit}>
+                <Button className="bg-blue-500" key={2} size="large" type="primary" onClick={() => {form.submit();}}loading={submit}>
                     Xác nhận
                 </Button>,
             ]}

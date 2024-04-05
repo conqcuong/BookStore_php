@@ -24,42 +24,55 @@ class UserController extends Controller
             $secretKey = env('JWT_SECRET');
             $decoded = JWT::decode($token, new Key($secretKey, 'HS256'));
             $userId = $decoded->userId;
+            
             $checkRole = User::findOrFail($userId);
             $role = $checkRole->role;
 
             $jsonData = $request->input('data');
             $formData = json_decode($jsonData, true);
 
-            $User = User::findOrFail($id);
+            $user = User::findOrFail($id);
+
             if ($userId != $id && $role != 'admin') {
-                throw new \Exception('Bạn Không có quyền.', 403);
+                throw new \Exception('Bạn không có quyền.', 403);
             }
-            $User->name = $formData['name'] ?? $User->name;
+
+            $user->name = $formData['name'] ?? $user->name;
+
             if (isset($formData['password'])) {
-                $User->password = bcrypt($formData['password']);
+                $user->password = bcrypt($formData['password']);
             }
+
             if ($role == 'admin') {
-                $User->role = isset($formData['role']) ? $formData['role'] : $User->role;
+                $user->role = isset($formData['role']) ? $formData['role'] : $user->role;
             } else {
                 if (isset($formData['role'])) {
-                    throw new \Exception('Bạn Không có quyền.', 403);
+                    throw new \Exception('Bạn không có quyền.', 403);
                 }
             }
+
+            $user->address = $formData['address'] ?? $user->address;
+            $user->phone = $formData['phone'] ?? $user->phone;
+
             if ($request->hasFile('file')) {
-                $User->image_path = cloudinary()->upload($request->file('file')->getRealPath())->getSecurePath();
+                $user->image_path = cloudinary()->upload($request->file('file')->getRealPath())->getSecurePath();
             }
-            $User->save();
+
+            $user->save();
+
             $data = [
                 'status' => 200,
                 'message' => 'Data updated successfully',
             ];
             return response()->json($data, 200);
+
         } catch (\Illuminate\Database\Eloquent\ModelNotFoundException $e) {
             $data = [
                 'status' => 404,
                 'message' => 'User not found',
             ];
             return response()->json($data, 404);
+
         } catch (\Exception $e) {
             $data = [
                 'status' => $e->getCode(),
@@ -68,6 +81,7 @@ class UserController extends Controller
             return response()->json($data, $e->getCode());
         }
     }
+
 
     public function findById($id)
     {

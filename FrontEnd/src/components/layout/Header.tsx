@@ -54,7 +54,6 @@ export const Header = () => {
 
     const handleLogout = () => {
         dispatch(logOutUser(navigate) as unknown as AnyAction);
-        console.log("ok")
     }
 
     const listProductsCart = (
@@ -136,7 +135,7 @@ export const Header = () => {
                     <div>
                         <Link to='/' className='text-2xl font-bold text-blue-700 flex items-center gap-2'><FaBlog className=' inline-block'/>Books</Link>
                     </div>
-                    <div className="navbar flex gap-7 font-semibold text-17px">
+                    <div className="navbar1 flex gap-7 font-semibold text-17px">
                         <NavLink className="p-3 nav-link" to='/'>Home</NavLink>
                         <NavLink className="p-3 nav-link" to='/shop'>Shop</NavLink>
                         <Link className="p-3 nav-link" to='/'>About</Link>
@@ -199,7 +198,7 @@ export const Header = () => {
                                                 </div>
                                                 {userCanAccess && (
                                                     <li className="block py-2">
-                                                        <Link to='/admin'>Trang quản trị</Link>
+                                                        <Link to='/admin/dash-board'>Trang quản trị</Link>
                                                     </li>
                                                 )}
                                                 <li className="block py-2">

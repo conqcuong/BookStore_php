@@ -19,7 +19,6 @@ import { useEffect } from "react";
 import { getLogin } from "./redux/apiRequest";
 import { useDispatch } from "react-redux";
 import { AnyAction } from "redux";
-import { Test } from "./test/Test"
 import {useSelector} from "react-redux";
 
 function App() {

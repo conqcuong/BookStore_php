@@ -71,13 +71,13 @@ img {
   vertical-align: middle;
 }
 
-.navbar .nav-link {
+.navbar1 .nav-link {
   position: relative;
   text-decoration: none;
   color: #1a1a1a;
 }
 
-.navbar .nav-link::after {
+.navbar1 .nav-link::after {
   content: "";
   position: absolute;
   left: 50%;
@@ -89,11 +89,11 @@ img {
   transition: width 0.3s ease;
 }
 
-.navbar .nav-link:hover::after {
+.navbar1 .nav-link:hover::after {
   width: 60%;
 }
 
-.navbar .nav-link.active::after {
+.navbar1 .nav-link.active::after {
   width: 60%;
 }
 

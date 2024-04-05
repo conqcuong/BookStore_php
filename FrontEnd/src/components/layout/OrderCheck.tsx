@@ -156,6 +156,7 @@ export const OrderCheck = () => {
                         <Form.Item
                             label="Họ và tên"
                             name="fullName" 
+                            initialValue={user.name}
                             rules={[
                                 {
                                     required: true,
@@ -171,6 +172,7 @@ export const OrderCheck = () => {
                         <Form.Item
                             className="text-left"
                             label="Số điện thoại"
+                            initialValue={user.phone}
                             name="phone" 
                             rules={[
                                 {
@@ -191,6 +193,7 @@ export const OrderCheck = () => {
                         <Form.Item
                             label="Địa chỉ"
                             name="address" 
+                            initialValue={user.address}
                             rules={[
                                 {
                                     required: true,

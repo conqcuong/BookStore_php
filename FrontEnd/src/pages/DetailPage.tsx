@@ -28,9 +28,7 @@ export const DetailPage = () => {
                 thumbnail: item,
             }));
             setImages(listImage);
-            if (mainImage === "" && listImage.length > 0) {
-                setMainImage(listImage[0].thumbnail);
-            }
+            setMainImage(listImage[0].thumbnail)
         }
     }, [book]);
 

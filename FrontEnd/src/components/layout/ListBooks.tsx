@@ -17,7 +17,7 @@ export const ListBooks = (Props:any) => {
                                     <img className="max-h-[190px] w-auto text-center" src={book.thumbnail_image} alt="" />
                                 </Link>
                             </div>
-                            <Link to={`/shop/details/${book.id}`}><h2 className="line-clamp-2 font-semibold">{book.name}</h2></Link>
+                            <Link to={`/shop/details/${book.id}`}><h2 className="line-clamp-1 font-semibold">{book.name}</h2></Link>
                             <div className="mt-1">
                                 <p>
                                     <span className='text-[#C92127] font-semibold'>{(book.price).toLocaleString().replace(/\B(?=(\d{3})+(?!\d))/g, '.')} đ</span>

@@ -166,6 +166,7 @@ export const ProductAdd = (Props: any) => {
                     Hủy bỏ
                 </Button>,
                 <Button
+                    className='bg-blue-500'
                     key={2}
                     size="large"
                     type="primary"

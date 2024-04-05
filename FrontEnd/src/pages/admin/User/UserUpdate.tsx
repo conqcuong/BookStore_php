@@ -56,7 +56,7 @@ export const UserUpdate = (Props:any) => {
             onCancel={() => setOpenModalUpdateUser(false)}
             maskClosable={false}
             footer={[
-                <Button key={1} size="large" onClick={() => { setOpenModalUpdateUser(false);}}>Hủy bỏ</Button>,<Button key={2} size="large" type="primary"
+                <Button key={1} size="large" onClick={() => { setOpenModalUpdateUser(false);}}>Hủy bỏ</Button>,<Button key={2} size="large" type="primary" className="bg-blue-500"
                 onClick={() => { setFilters([]);form.submit();}}loading={submit}>Xác nhận</Button>,
             ]}
             centered
